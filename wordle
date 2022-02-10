@@ -1,0 +1,28 @@
+from wordfreq import word_frequency
+
+with open('words_full.txt') as f:
+    words = [word.strip() for word in f.readlines() if len(word) == 6]
+    words.sort(key=lambda x:word_frequency(x, 'en'))
+    words = words[::-1]
+
+
+while True:
+    green = input("Enter green letters and dashes: ")
+    yellow = input("Enter new yellow letters and dashes: ")
+    grey = input("Enter new grey letters and dashes: ")
+
+    for i, c in enumerate(green):
+        if c != '-':
+            words = [word for word in words if word[i] == c]
+
+    for i, c in enumerate(yellow):
+        if c != '-':
+            words = [word for word in words if c in word and word[i] != c]
+
+    for i, c in enumerate(grey):
+        if c!= '-' or c not in green:
+            words = [word for word in words if c not in word]
+    
+
+    print(words)
+    print(len(words))
